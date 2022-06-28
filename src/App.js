@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import {Routes, Route} from 'react-router-dom';
+import Main from './layouts/main';
+import Login from './layouts/login';
 import './App.css';
 
 function App() {
+  const isLogin = true;
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        {isLogin ? (
+          <>
+            <Route path="/main" element={<Main />}></Route>
+          </>
+        ):(
+          <>
+            <Route path="/login" element={<Login/>}></Route>
+          </>
+        )}
+      </Routes>
     </div>
   );
 }
