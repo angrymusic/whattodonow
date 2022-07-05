@@ -6,18 +6,11 @@ const address = "http://localhost:8000/";
 export default function Login() {
     const [inputId, setInputId] = useState("");
     const [inputPw, setInputPw] = useState("");
-    const [userData, setUserData] = useState();
+    const [isExist, setIsExist] = useState(null);
+    const [loginTry, setLoginTry] = useState(false);
+
     //사용자 정보 받아오기
-    useEffect(() => {
-        axios
-            .get(address + "getUsers")
-            .then((res) => {
-                console.log("res: " + res);
-                setUserData(res.data);
-                console.log("userData: " + userData);
-            })
-            .catch();
-    }, []);
+    useEffect(() => {}, [loginTry]);
 
     const handleInputId = (e) => {
         setInputId(e.target.value);
@@ -28,8 +21,18 @@ export default function Login() {
     };
 
     // login 버튼 클릭 이벤트
-    const onClickLogin = () => {
-        console.log("click login");
+    const onClickLogin = async() => {
+        const {data:result} = await axios.post(address + "getUsers",{
+            inputId: { inputId },
+            inputPw: { inputPw },
+        });
+        console.log(result);
+        if (result) {
+            //로그인 성공! 화면이동
+            console.log("login success");
+        } else {
+            console.log("login fail");
+        }
     };
     const onClickSignUp = () => {
         console.log("click signup");
@@ -49,10 +52,10 @@ export default function Login() {
                         <input type="text" name="input_pw" value={inputPw} onChange={handleInputPw} />
                     </div>
                     <div>
-                        <button type="button" onClick={onClickLogin}>
+                        <button type="button" onClick={onClickSignUp}>
                             회원가입
                         </button>
-                        <button type="button" onClick={onClickSignUp}>
+                        <button type="button" onClick={onClickLogin}>
                             로그인
                         </button>
                     </div>
