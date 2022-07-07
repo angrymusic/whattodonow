@@ -1,0 +1,85 @@
+.signup-header{
+    flex:0.5;
+    display: flex;
+    text-align: center;
+    color: white;
+    font-size: 10vw;
+    align-items: center;
+    justify-content: center;
+    
+}
+.signup-backGround {
+    background-color: rgb(48, 48, 48);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.signup-inputBox{
+    flex: 1;
+    margin:auto;
+    border-radius: 70px;
+    width: 80%;
+    background-color: rgb(20, 20, 20);
+    display: flex;
+    align-items: center;
+}
+.signup-inputBoxContainer{
+    font-family: 'NotoSansKR-Light';
+    color: white;
+    margin:auto;
+    text-align: center;
+}
+.signup-blanks{
+    display: flex;
+    justify-content: space-between;
+}
+.signup-label{
+    font-size: 4vw;
+    margin-top:16px;
+}
+.signup-blank{
+    color:white;
+    font-family: 'NotoSansKR-Light';
+    background-color: rgb(20, 20, 20);
+    margin-top:10px;
+    width: 30vw;
+    height: 7vw;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid rgb(48, 48, 48);
+}
+.signup-buttons{
+    margin-top:20px;
+    display: flex;
+    justify-content: flex-end;
+}
+.signup-button{
+    color:white;
+    margin-left:7px;
+    font-family: 'NotoSansKR-Light';
+    font-size: 16px;
+    height: 40px;
+    border-radius: 5px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid rgb(18,18,18);
+    background: rgb(48,48,48);
+}
+.signup-footer{
+    flex:0.5;
+}
+@media (min-width:821px) {
+    .signup-inputBox{
+        width: 40%;
+    }
+    .signup-label{
+        font-size: 3vh;
+    }
+    .signup-blank{
+        width: 30vh;
+        height: 5vh;
+    }
+}
