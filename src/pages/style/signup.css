@@ -71,6 +71,7 @@
 .signup-footer{
     flex:0.5;
 }
+/* big screen */
 @media (min-width:821px) {
     .signup-inputBox{
         width: 40%;

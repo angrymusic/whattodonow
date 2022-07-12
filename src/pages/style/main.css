@@ -1,0 +1,114 @@
+.main-backGround {
+    background-color: rgb(48, 48, 48);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.closedWriter {
+    display: none;
+}
+.openedWriter {
+    display: block;
+}
+.main-header {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: "NotoSansKR-Bold";
+    font-size: 6vw;
+}
+.main-container {
+    background-color: rgb(20, 20, 20);
+    flex: 30;
+}
+.main-footer {
+    flex: 4;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.main-quitButton {
+    width: 60px;
+    height: 60px;
+    line-height: 71px;
+    text-align: center;
+    background-color: antiquewhite;
+    border-radius: 100%;
+    font-size: 85px;
+    transform: rotate(45deg);
+}
+.main-plusButton {
+    width: 60px;
+    height: 60px;
+    line-height: 71px;
+    text-align: center;
+    background-color: antiquewhite;
+    border-radius: 100%;
+    font-size: 80px;
+}
+.main-writerContainer {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+.main-writerHeader {
+    flex: 2;
+}
+.main-writer {
+    flex: 30;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.main-writerFooter {
+    flex: 4;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.main-title {
+    color: black;
+    font-size: 4vw;
+    margin-right: 20px;
+}
+.main-dateInputBox {
+    color: black;
+    font-family: "NotoSansKR-Light";
+    font-size: 4vw;
+    background-color: rgb(255, 255, 255);
+    margin-top: 10px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid rgb(48, 48, 48);
+}
+.main-todoInputBox {
+    color: black;
+    font-family: "NotoSansKR-Light";
+    font-size: 4vw;
+    flex-grow:1;
+    width: 80vw;
+    margin: auto;
+    border: none;
+    caret-color: black;
+}
+.main-writePage{
+    width: 80vw;
+    height: 50vh;
+    padding: 10px;
+    background-color: rgb(247, 255, 156);
+    border-radius: 2px;
+    border-right: 4px solid rgb(93, 96, 59);
+    border-bottom: 4px solid rgb(93, 96, 59);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

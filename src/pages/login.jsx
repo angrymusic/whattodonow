@@ -55,7 +55,7 @@ export default function Login() {
     };
     return (
         <div className="login-backGround">
-            <div className="login-logo">What To Do Now?</div>
+            <div className="login-header">What To Do Now?</div>
             <div className="login-inputBox">
                 <div className="login-inputBoxContainer">
                     <div className="login-blanks">

@@ -13,12 +13,11 @@
     font-family: 'NotoSansKR-Light';
     src: url('../../fonts/NotoSansKR-Light.otf');
 }
-.login-logo{
+.login-header{
     flex:1;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
     color: white;
     font-family: 'NotoSansKR-Bold';
     font-size: 10vw;
@@ -84,18 +83,20 @@
     font-size: 5vw;
     flex: 0.7;
 }
+/* big screen */
 @media (min-width:821px) {
-    .login-logo{
-        font-size: 10vh;
+    .login-header{
+        font-size: 9vh;
     }
     .login-inputBox{
-        width: 40%;
+        width: 45%;
     }
     .login-label{
         font-size: 3vh;
     }
     .login-blank{
-        width: 30vh;
+        font-size: 2vh;
+        width: 20vh;
         height: 5vh;
     }
 }
