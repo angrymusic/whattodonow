@@ -10,7 +10,30 @@ export default function Main() {
     const [writerMode, setWriterMode] = useState("closed");
     const [inputDate, setInputDate] = useState(null);
     const [inputToDo, setInputToDo] = useState(null);
-    const inputId = location.state.ID;
+    const [state, refreshList] = useState(true);
+    const todoList = [];
+    let inputId = null;
+    if (location.state != null) {
+        inputId = location.state.inputId;
+    }
+    useEffect(() => {
+        getToDoList();
+        console.log(todoList);
+    }, [state]);
+
+    const getToDoList = async () => {
+        const { data: result } = await axios.post(address + "gettodo", {
+            inputId: { inputId },
+        });
+        for (let i = 0; i < result.length; i++) {
+            console.log(result[i].TODO);
+            todoList.push(
+                <li key={i} className="main-listItem">
+                    {result[i].TODO}
+                </li>
+            );
+        }
+    };
 
     const handleInputDate = (e) => {
         setInputDate(e.target.value);
@@ -23,15 +46,14 @@ export default function Main() {
     };
     const closeWriter = () => {
         setWriterMode("closed");
+        getToDoList();
     };
     const addToDo = async () => {
         if (inputDate === null || inputToDo === null) {
             alert("내용이 없습니다.");
-            //빈칸알림
             return;
         }
         setWriterMode("closed");
-        console.log(inputDate);
         const { data: result } = await axios.post(address + "addtodo", {
             inputId: { inputId },
             inputDate: { inputDate },
@@ -40,10 +62,11 @@ export default function Main() {
         console.log(result);
         if (result) {
             //로그인 성공! 화면이동
-            console.log("login success");
+            console.log("add success");
         } else {
-            console.log("login fail");
+            console.log("add fail");
         }
+        getToDoList();
     };
 
     return (
@@ -73,7 +96,7 @@ export default function Main() {
             </div>
             <div className="main-header">What To Do Now?</div>
             <div className="main-container">
-                <div className="main-checkList"></div>
+                <ul className="main-checkList">{todoList}</ul>
             </div>
             <div className="main-footer">
                 <div className="main-plusButton" onClick={openWriter}>

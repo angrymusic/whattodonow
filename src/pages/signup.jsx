@@ -9,7 +9,7 @@ export default function Signup() {
     const [inputPw, setInputPw] = useState("");
     const [changeId, setChangeId] = useState(true);
     const navigate = useNavigate();
-
+    
     const handleInputId = (e) => {
         setInputId(e.target.value);
         setChangeId(true);

@@ -19,6 +19,7 @@ const db = mysql.createPool({
     password: "1234",
     database: dbName,
     multipleStatements: true,
+    dateStrings:'date',
 });
 
 //foreign key 구현해야함!
@@ -88,8 +89,8 @@ app.post("/signup", (req, res) => {
 });
 app.post("/addtodo", (req, res) => {
     let inputId = req.body.inputId.inputId;
-    let inputDate = req.body.inputPw.inputDate;
-    let inputToDo = req.body.inputPw.inputToDo;
+    let inputDate = req.body.inputDate.inputDate;
+    let inputToDo = req.body.inputToDo.inputToDo;
     let resultResponse = true; //계정 생성에 성공하면 true
     const sqlCMD =
         "INSERT INTO TODO_DATA(ID, TODO, DEADLINE) VALUES('" + inputId + "','" + inputToDo + "','" + inputDate + "')";
@@ -99,6 +100,23 @@ app.post("/addtodo", (req, res) => {
             console.log(err);
         }
         res.json(resultResponse);
+    });
+});
+app.post("/gettodo", (req, res) => {
+    let inputId = req.body.inputId.inputId;
+    let todolist = []; 
+    const sqlCMD = "SELECT * from " + table_todo;
+    db.query(sqlCMD, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            result.map((user) => {
+                if (user.ID === inputId) {
+                    todolist.push(user);
+                }
+            });
+        }
+        res.json(todolist);
     });
 });
 

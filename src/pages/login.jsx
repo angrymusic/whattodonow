@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./style/login.css";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,11 @@ export default function Login() {
     const [inputPw, setInputPw] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log("init db");
+        axios.get(address);
+    }, []);
     const handleInputId = (e) => {
         setInputId(e.target.value);
     };
@@ -30,8 +35,8 @@ export default function Login() {
             //로그인 성공! 화면이동
             console.log("login success");
             dispatch({
-                type:'login'
-            })
+                type: "login",
+            });
             goToMain(inputId);
         } else {
             console.log("login fail");
@@ -49,7 +54,7 @@ export default function Login() {
     const goToMain = (userId) => {
         navigate("/main", {
             state: {
-                ID: userId,
+                inputId: userId,
             },
         });
     };
@@ -62,13 +67,25 @@ export default function Login() {
                         <label className="login-label" htmlFor="input_id">
                             아이디{"\b "}
                         </label>
-                        <input className="login-blank" type="text" name="input_id" value={inputId} onChange={handleInputId} />
+                        <input
+                            className="login-blank"
+                            type="text"
+                            name="input_id"
+                            value={inputId}
+                            onChange={handleInputId}
+                        />
                     </div>
                     <div className="blanks">
                         <label className="login-label" htmlFor="input_pw">
                             비밀번호{"\b "}
                         </label>
-                        <input className="login-blank" type="text" name="input_pw" value={inputPw} onChange={handleInputPw} />
+                        <input
+                            className="login-blank"
+                            type="text"
+                            name="input_pw"
+                            value={inputPw}
+                            onChange={handleInputPw}
+                        />
                     </div>
 
                     <div className="login-buttons">
