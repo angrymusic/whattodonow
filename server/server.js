@@ -104,7 +104,7 @@ app.post("/addtodo", (req, res) => {
 });
 app.post("/gettodo", (req, res) => {
     let inputId = req.body.inputId.inputId;
-    let todolist = []; 
+    let todolist = [{CONNECTION:'SUCCESS'}];
     const sqlCMD = "SELECT * from " + table_todo;
     db.query(sqlCMD, (err, result) => {
         if (err) {

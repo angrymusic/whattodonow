@@ -10,30 +10,33 @@ export default function Main() {
     const [writerMode, setWriterMode] = useState("closed");
     const [inputDate, setInputDate] = useState(null);
     const [inputToDo, setInputToDo] = useState(null);
+    const [todoList, setToDoList] = useState(null);
     const [state, refreshList] = useState(true);
-    const todoList = [];
     let inputId = null;
     if (location.state != null) {
         inputId = location.state.inputId;
     }
-    useEffect(() => {
-        getToDoList();
-        console.log(todoList);
-    }, [state]);
-
     const getToDoList = async () => {
+        let list = [];
         const { data: result } = await axios.post(address + "gettodo", {
             inputId: { inputId },
         });
-        for (let i = 0; i < result.length; i++) {
-            console.log(result[i].TODO);
-            todoList.push(
+        for (let i = 1; i < result.length; i++) {
+            list.push(
                 <li key={i} className="main-listItem">
+                    <input type="checkbox" />
                     {result[i].TODO}
                 </li>
             );
         }
+        setToDoList(list);
+        if (result.length == 1) {
+            refreshList(!state);
+        }
     };
+    useEffect(() => {
+        getToDoList();
+    }, [state]);
 
     const handleInputDate = (e) => {
         setInputDate(e.target.value);
@@ -46,7 +49,6 @@ export default function Main() {
     };
     const closeWriter = () => {
         setWriterMode("closed");
-        getToDoList();
     };
     const addToDo = async () => {
         if (inputDate === null || inputToDo === null) {
@@ -66,7 +68,7 @@ export default function Main() {
         } else {
             console.log("add fail");
         }
-        getToDoList();
+        refreshList(!state);
     };
 
     return (
