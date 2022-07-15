@@ -18,14 +18,70 @@ export default function Main() {
     }
     const getToDoList = async () => {
         let list = [];
+        let Dday = "";
+        let korDay = "";
+        const today = new Date();
+        let deadline;
+        let diffOfDay;
+        const weekday = ["일", "월", "화", "수", "목", "금", "토"];
+        const sundayDate = 7 - today.getDay();
+        let sunday = new Date();
+        let nextSunday = new Date();
+        let nextNextSunday = new Date();
+        sunday.setHours(0,0,0,0);
+        nextSunday.setHours(0,0,0,0);
+        nextNextSunday.setHours(0,0,0,0);
+        sunday.setDate(sunday.getDate() + sundayDate);
+        nextSunday.setDate(sunday.getDate() + 7);
+        nextNextSunday.setDate(nextSunday.getDate() + 7);
+
+
+        console.log(sunday.toString());
+        console.log(nextSunday.toString());
+        console.log(nextNextSunday.toString());
+
         const { data: result } = await axios.post(address + "gettodo", {
             inputId: { inputId },
         });
         for (let i = 1; i < result.length; i++) {
+            deadline = new Date(result[i].DEADLINE);
+            deadline.setHours(0);
+            diffOfDay = (deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+            if ( 0 <= diffOfDay) {
+                korDay = weekday[deadline.getDay()];
+                if (today < deadline && deadline < sunday) {
+                    korDay = "이번주 " + korDay;
+                } else if (sunday <= deadline && deadline < nextSunday) {
+                    korDay = "다음주 " + korDay;
+                } else if (nextSunday <= deadline && deadline < nextNextSunday) {
+                    korDay = "다다음주 " + korDay;
+                }
+            }
+            else{
+                korDay ="";
+            }
+            if (-1 <= diffOfDay && diffOfDay < 0) {
+                Dday = "D-day";
+            } else if (0 <= diffOfDay && diffOfDay < 1) {
+                Dday = "D-1";
+            } else if (diffOfDay < -1) {
+                Dday = "D+" + (parseInt(diffOfDay) * -1 + 1);
+            } else {
+                Dday = "D-" + (parseInt(diffOfDay) + 1);
+            }
             list.push(
                 <li key={i} className="main-listItem">
-                    <input type="checkbox" />
-                    {result[i].TODO}
+                    <div className="main-itemSummary">
+                        <input type="checkbox" />
+                        {/* 체크박스 */}
+                        <div className="main-itemToDo">
+                            {result[i].TODO}
+                            {/* 내용 */}
+                        </div>
+                        <div className="main-itemDday">{Dday}</div>
+                        <div className="main-itemKorDay">{korDay}</div>
+                    </div>
+                    <div className="main-itemDetail"></div>
                 </li>
             );
         }
@@ -51,8 +107,16 @@ export default function Main() {
         setWriterMode("closed");
     };
     const addToDo = async () => {
-        if (inputDate === null || inputToDo === null) {
+        if (inputToDo === null) {
             alert("내용이 없습니다.");
+            return;
+        }
+        else if(inputDate === null){
+            alert("날짜를 입력해주세요.");
+            return;
+        }
+        else if(inputToDo.length>40){
+            alert("최대 40글자입니다.");
             return;
         }
         setWriterMode("closed");
@@ -83,7 +147,7 @@ export default function Main() {
                                 <input className="main-dateInputBox" type="date" onChange={handleInputDate} />
                             </div>
                             <div className="main-title">할 일</div>
-                            <textarea className="main-todoInputBox" onChange={handleInputToDo} />
+                            <textarea className="main-todoInputBox" onChange={handleInputToDo} placeholder="최대 40글자입니다."/>
                         </div>
                     </div>
                     <div className="main-writerFooter">
@@ -101,7 +165,7 @@ export default function Main() {
                 <ul className="main-checkList">{todoList}</ul>
             </div>
             <div className="main-footer">
-                <div className="main-plusButton" onClick={openWriter}>
+                <div className="main-writerOpener" onClick={openWriter}>
                     +
                 </div>
             </div>
