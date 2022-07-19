@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./style/main.css";
 import { useLocation } from "react-router-dom";
+import TODO from "./components/todo";
 
 const address = "http://localhost:8000/";
 
@@ -10,12 +11,32 @@ export default function Main() {
     const [writerMode, setWriterMode] = useState("closed");
     const [inputDate, setInputDate] = useState(null);
     const [inputToDo, setInputToDo] = useState(null);
-    const [todoList, setToDoList] = useState(null);
+    const [todoList, setToDoList] = useState([]);
     const [state, refreshList] = useState(true);
     let inputId = null;
     if (location.state != null) {
         inputId = location.state.inputId;
     }
+    const deleteToDo = async (NO) => {
+        const { data: result } = await axios.post(address + "deletetodo", {
+            NO: `${NO}`,
+        });
+        refreshList(!state);
+    };
+    const updateCheckBox = async (NO, CHECKED) => {
+        const { data: result } = await axios.post(address + "updatecheck", {
+            CHECKED: `${CHECKED}`,
+            NO: `${NO}`,
+        });
+    };
+    const updateToDo = async (NO, TODO, DEADLINE) => {
+        const { data: result } = await axios.post(address + "updatetodo", {
+            TODO: `${TODO}`,
+            NO: `${NO}`,
+            DEADLINE: `${DEADLINE}`,
+        });
+        refreshList(!state);
+    };
     const getToDoList = async () => {
         let list = [];
         let Dday = "";
@@ -28,17 +49,12 @@ export default function Main() {
         let sunday = new Date();
         let nextSunday = new Date();
         let nextNextSunday = new Date();
-        sunday.setHours(0,0,0,0);
-        nextSunday.setHours(0,0,0,0);
-        nextNextSunday.setHours(0,0,0,0);
+        sunday.setHours(0, 0, 0, 0);
+        nextSunday.setHours(0, 0, 0, 0);
+        nextNextSunday.setHours(0, 0, 0, 0);
         sunday.setDate(sunday.getDate() + sundayDate);
         nextSunday.setDate(sunday.getDate() + 7);
         nextNextSunday.setDate(nextSunday.getDate() + 7);
-
-
-        console.log(sunday.toString());
-        console.log(nextSunday.toString());
-        console.log(nextNextSunday.toString());
 
         const { data: result } = await axios.post(address + "gettodo", {
             inputId: { inputId },
@@ -47,7 +63,7 @@ export default function Main() {
             deadline = new Date(result[i].DEADLINE);
             deadline.setHours(0);
             diffOfDay = (deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
-            if ( 0 <= diffOfDay) {
+            if (0 <= diffOfDay) {
                 korDay = weekday[deadline.getDay()];
                 if (today < deadline && deadline < sunday) {
                     korDay = "이번주 " + korDay;
@@ -56,9 +72,8 @@ export default function Main() {
                 } else if (nextSunday <= deadline && deadline < nextNextSunday) {
                     korDay = "다다음주 " + korDay;
                 }
-            }
-            else{
-                korDay ="";
+            } else {
+                korDay = "";
             }
             if (-1 <= diffOfDay && diffOfDay < 0) {
                 Dday = "D-day";
@@ -70,23 +85,21 @@ export default function Main() {
                 Dday = "D-" + (parseInt(diffOfDay) + 1);
             }
             list.push(
-                <li key={i} className="main-listItem">
-                    <div className="main-itemSummary">
-                        <input type="checkbox" />
-                        {/* 체크박스 */}
-                        <div className="main-itemToDo">
-                            {result[i].TODO}
-                            {/* 내용 */}
-                        </div>
-                        <div className="main-itemDday">{Dday}</div>
-                        <div className="main-itemKorDay">{korDay}</div>
-                    </div>
-                    <div className="main-itemDetail"></div>
-                </li>
+                <TODO
+                    key={i}
+                    todo={result[i].TODO}
+                    dday={Dday}
+                    korday={korDay}
+                    no={result[i].NO}
+                    done={result[i].DONE}
+                    deletetodo={deleteToDo}
+                    updatecheckbox={updateCheckBox}
+                    updatetodo={updateToDo}
+                />
             );
         }
         setToDoList(list);
-        if (result.length == 1) {
+        if (result.length === 0) {
             refreshList(!state);
         }
     };
@@ -110,12 +123,10 @@ export default function Main() {
         if (inputToDo === null) {
             alert("내용이 없습니다.");
             return;
-        }
-        else if(inputDate === null){
+        } else if (inputDate === null) {
             alert("날짜를 입력해주세요.");
             return;
-        }
-        else if(inputToDo.length>40){
+        } else if (inputToDo.length > 40) {
             alert("최대 40글자입니다.");
             return;
         }
@@ -147,7 +158,11 @@ export default function Main() {
                                 <input className="main-dateInputBox" type="date" onChange={handleInputDate} />
                             </div>
                             <div className="main-title">할 일</div>
-                            <textarea className="main-todoInputBox" onChange={handleInputToDo} placeholder="최대 40글자입니다."/>
+                            <textarea
+                                className="main-todoInputBox"
+                                onChange={handleInputToDo}
+                                placeholder="최대 40글자입니다."
+                            />
                         </div>
                     </div>
                     <div className="main-writerFooter">
@@ -162,7 +177,17 @@ export default function Main() {
             </div>
             <div className="main-header">What To Do Now?</div>
             <div className="main-container">
-                <ul className="main-checkList">{todoList}</ul>
+                <div className="main-checkList">
+                    <div className="main-index">
+                        <div className="main-checkBox"></div>
+                        <div className="main-indexText">
+                            <div className="main-itemToDo">할 일</div>
+                            <div className="main-itemDday">D-day</div>
+                            <div className="main-itemKorDay">요일</div>
+                        </div>
+                    </div>
+                    {todoList}
+                </div>
             </div>
             <div className="main-footer">
                 <div className="main-writerOpener" onClick={openWriter}>

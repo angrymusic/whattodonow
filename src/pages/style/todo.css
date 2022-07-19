@@ -1,0 +1,74 @@
+.todo-listItem {
+    color: white;
+    font-size: 4vw;
+    margin:10px 0px 10px 0px;
+}
+.todo-itemSummary {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgb(184, 168, 142);
+}
+.todo-itemSummary-active {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 2px dotted rgb(184, 168, 142);
+}
+.todo-checkBox{
+    width: 4vw;
+    margin-right: 10px;
+}
+.todo-textArea{
+    flex-grow:1;
+    display: flex;
+}
+.todo-itemToDo {
+    font-size: 4.5vw;
+    flex: 2.5;
+    text-align: center;
+}
+.todo-itemDday {
+    flex: 1;
+    text-align: center;
+}
+.todo-itemKorDay {
+    flex: 1;
+    text-align: center;
+}
+.todo-updateContainer{
+    display: none;
+}
+.todo-updateContainer-active{
+    display: block;
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    border-bottom: 2px dotted rgb(184, 168, 142);
+}
+.todo-itemDetail{
+    display: none;
+}
+.todo-itemDetail-active{
+    display: block;
+    padding: 10px;
+    border-bottom: 2px solid rgb(184, 168, 142);
+    display: flex;
+    justify-content: space-evenly;
+}
+.todo-todoInputBox{
+    flex:4;
+    color: white;
+    background-color: black;
+}
+.todo-dateInputBox{
+    flex: 2;
+    color: white;
+    background-color: black;
+}
+.todo-button{
+    color: white;
+    background-color: black;
+    flex-grow: 1;
+    font-size: 5vw;
+}
