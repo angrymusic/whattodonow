@@ -13,10 +13,12 @@ export default function Main() {
     const [inputToDo, setInputToDo] = useState(null);
     const [todoList, setToDoList] = useState([]);
     const [state, refreshList] = useState(true);
-    let inputId = null;
-    if (location.state != null) {
+    let inputId;
+    if(location.state){
         inputId = location.state.inputId;
     }
+    
+    
     const deleteToDo = async (NO) => {
         const { data: result } = await axios.post(address + "deletetodo", {
             NO: `${NO}`,
@@ -55,7 +57,6 @@ export default function Main() {
         sunday.setDate(sunday.getDate() + sundayDate);
         nextSunday.setDate(sunday.getDate() + 7);
         nextNextSunday.setDate(nextSunday.getDate() + 7);
-
         const { data: result } = await axios.post(address + "gettodo", {
             inputId: { inputId },
         });
@@ -105,7 +106,7 @@ export default function Main() {
     };
     useEffect(() => {
         getToDoList();
-    }, [state]);
+    }, [state, inputId]);
 
     const handleInputDate = (e) => {
         setInputDate(e.target.value);

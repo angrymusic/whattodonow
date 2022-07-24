@@ -110,6 +110,7 @@ app.post("/addtodo", (req, res) => {
 app.post("/gettodo", (req, res) => {
     console.log("receive request /gettodo");
     let inputId = req.body.inputId.inputId;
+    console.log("login ID = "+ inputId);
     let todolist = [{ CONNECTION: "SUCCESS" }];
     const sqlCMD = "SELECT * from " + table_todo;
     db.query(sqlCMD, (err, result) => {

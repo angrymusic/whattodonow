@@ -20,6 +20,7 @@
     margin-right: 10px;
 }
 .todo-textArea{
+    width: 80vw;
     flex-grow:1;
     display: flex;
 }
@@ -27,6 +28,8 @@
     font-size: 4.5vw;
     flex: 2.5;
     text-align: center;
+    overflow: hidden;
+    overflow: scroll;
 }
 .todo-itemDday {
     flex: 1;
