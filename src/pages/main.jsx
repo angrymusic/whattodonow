@@ -4,7 +4,8 @@ import "./style/main.css";
 import { useLocation } from "react-router-dom";
 import TODO from "./components/todo";
 
-const address = "http://localhost:8000/";
+axios.defaults.baseURL = "";
+const address = "http://3.34.2.64:8000/";
 
 export default function Main() {
     const location = useLocation();
@@ -14,11 +15,10 @@ export default function Main() {
     const [todoList, setToDoList] = useState([]);
     const [state, refreshList] = useState(true);
     let inputId;
-    if(location.state){
+    if (location.state) {
         inputId = location.state.inputId;
     }
-    
-    
+
     const deleteToDo = async (NO) => {
         const { data: result } = await axios.post(address + "deletetodo", {
             NO: `${NO}`,

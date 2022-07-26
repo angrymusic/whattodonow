@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./style/signup.css";
-const address = "http://localhost:8000/";
+
+axios.defaults.baseURL = "";
+const address = "http://3.34.2.64:8000/";
 
 export default function Signup() {
     const [inputId, setInputId] = useState("");
     const [inputPw, setInputPw] = useState("");
     const [changeId, setChangeId] = useState(true);
     const navigate = useNavigate();
-    
+
     const handleInputId = (e) => {
         setInputId(e.target.value);
         setChangeId(true);
