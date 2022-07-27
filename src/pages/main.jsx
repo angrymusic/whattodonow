@@ -20,19 +20,19 @@ export default function Main() {
     }
 
     const deleteToDo = async (NO) => {
-        const { data: result } = await axios.post(address + "deletetodo", {
+        await axios.post(address + "deletetodo", {
             NO: `${NO}`,
         });
         refreshList(!state);
     };
     const updateCheckBox = async (NO, CHECKED) => {
-        const { data: result } = await axios.post(address + "updatecheck", {
+        await axios.post(address + "updatecheck", {
             CHECKED: `${CHECKED}`,
             NO: `${NO}`,
         });
     };
     const updateToDo = async (NO, TODO, DEADLINE) => {
-        const { data: result } = await axios.post(address + "updatetodo", {
+        await axios.post(address + "updatetodo", {
             TODO: `${TODO}`,
             NO: `${NO}`,
             DEADLINE: `${DEADLINE}`,
@@ -56,7 +56,7 @@ export default function Main() {
         nextNextSunday.setHours(0, 0, 0, 0);
         sunday.setDate(sunday.getDate() + sundayDate);
         nextSunday.setDate(sunday.getDate() + 7);
-        nextNextSunday.setDate(nextSunday.getDate() + 7);
+        nextNextSunday.setDate(sunday.getDate() + 14);
         const { data: result } = await axios.post(address + "gettodo", {
             inputId: { inputId },
         });
