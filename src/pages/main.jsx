@@ -56,7 +56,7 @@ export default function Main() {
         nextNextSunday.setHours(0, 0, 0, 0);
         sunday.setDate(sunday.getDate() + sundayDate);
         nextSunday.setDate(sunday.getDate() + 7);
-        nextNextSunday.setDate(nextSunday.getDate() + 7);
+        nextNextSunday.setDate(sunday.getDate() + 14);
         const { data: result } = await axios.post(address + "gettodo", {
             inputId: { inputId },
         });
