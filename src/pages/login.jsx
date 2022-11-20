@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 console.log(axios.defaults.baseURL);
-const address = "http://3.34.2.64:8000/";
+// const address = "http://3.34.2.64:8000/";
+const address = "http://localhost:8000/";
 
 export default function Login() {
     const [inputId, setInputId] = useState("");

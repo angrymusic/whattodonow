@@ -5,7 +5,8 @@ import { useLocation } from "react-router-dom";
 import TODO from "./components/todo";
 
 axios.defaults.baseURL = "";
-const address = "http://3.34.2.64:8000/";
+// const address = "http://3.34.2.64:8000/";
+const address = "http://localhost:8000/";
 
 export default function Main() {
     const location = useLocation();

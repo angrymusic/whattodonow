@@ -4,7 +4,8 @@ import axios from "axios";
 import "./style/signup.css";
 
 axios.defaults.baseURL = "";
-const address = "http://3.34.2.64:8000/";
+// const address = "http://3.34.2.64:8000/";
+const address = "http://localhost:8000/";
 
 export default function Signup() {
     const [inputId, setInputId] = useState("");
